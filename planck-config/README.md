@@ -1,2 +1,0 @@
-# planck-config
-planck-config
