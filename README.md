@@ -1,2 +1,2 @@
-# planck-config
-planck-config
+# The Default Planck Layout
+
