@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "muse.h"
+#include "config.h"
 
 #define SFT_ENT  FUNC(0)    // Tap for enter, hold for right shift
 
@@ -15,14 +16,43 @@ enum planck_layers {
   _RAISE,
   _ADJUST,
   _ALTER,
-  _ACCENT
+  _ACC_A,
+  _ACC_E,
+  _ACC_I,
+  _ACC_O,
+  _ACC_U,
+  _ACC_C,
+  // _ACCENT,
 };
 
-
+enum custom_keycodes {
+  // Google sheets keycode
+  QMKBEST = SAFE_RANGE,
+  GS_IU,
+  GS_ID,
+  GS_IL,
+  GS_IR,
+  GS_DC,
+  GS_DR,
+  // accent
+  ACC_A,
+  ACC_E,
+  ACC_I,
+  ACC_O,
+  ACC_U,
+  ACC_C,
+};
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
+#define ADJUST MO(_ADJUST)
 #define ALTER MO(_ALTER)
-#define ACCENT MO(_ACCENT)
+#define ACC_A MO(_ACC_A)
+#define ACC_E MO(_ACC_E)
+#define ACC_I MO(_ACC_I)
+#define ACC_O MO(_ACC_O)
+#define ACC_U MO(_ACC_U)
+#define ACC_C MO(_ACC_C)
+// #define ACCENT MO(_ACCENT)
 
 #define ESC_ALT LT(ALTER, KC_ESC)  // Tap for ESC, hold for ALTER
 
@@ -30,30 +60,16 @@ enum planck_keycodes {
   QWERTY = SAFE_RANGE,
 };
 
-// enum unicode_names {
-//     E_AIG,
-//     E_GRV,
-//     E_CIR,
-//     A_GRV,
-//     U_GRV,
-//     O_CIR
-// };
-
-// const uint32_t PROGMEM unicode_map[] = {
-//     [E_AIG]  = 0x00C9,
-//     [E_GRV] = 0x00E8,
-//     [E_CIR] = 0x00EA,
-//     [A_GRV] = 0x00E0,
-//     [U_GRV] = 0x00F9,
-//     [O_CIR] = 0x00F4
-// };
 #define E_AIG UC(0x00E9)
 #define E_GRV UC(0x00E8)
 #define E_CIR UC(0x00EA)
 #define E_TRM UC(0x00EB)
 #define A_GRV UC(0x00E0)
+#define A_CIR UC(0x00E2)
 #define U_GRV UC(0x00F9)
 #define U_CIR UC(0x00FB)
+#define C_CED UC(0x00E7)
+#define EURO UC(0x20AC)
 
 
 #define O_CIR UC(0x00F4)
@@ -64,7 +80,22 @@ enum planck_keycodes {
 #define CUT LGUI(KC_X)
 #define COPY LGUI(KC_C)
 #define PASTE LGUI(KC_V)
+#define SPC_MAJ  MT(MOD_LSFT, KC_SPC)
 
+// #define A_ACC  LT(ACCENT, KC_A)
+// #define E_ACC  LT(ACCENT, KC_E)
+// #define I_ACC  LT(ACCENT, KC_I)
+// #define O_ACC  LT(ACCENT, KC_O)
+// #define U_ACC  LT(ACCENT, KC_U)
+// #define C_ACC  LT(ACCENT, KC_C)
+
+
+#define A_ACC  LT(ACC_A, KC_A)
+#define E_ACC  LT(ACC_E, KC_E)
+#define I_ACC  LT(ACC_I, KC_I)
+#define O_ACC  LT(ACC_O, KC_O)
+#define U_ACC  LT(ACC_U, KC_U)
+#define C_ACC  LT(ACC_C, KC_C)
 
 
 
@@ -72,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
  * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   E T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * ESC_CTL|   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |SftEnt|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -82,12 +113,42 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_planck_grid(
-    LT(ALTER, KC_TAB),  LT(ACCENT, KC_Q),    KC_W,    LT(ACCENT, KC_E),    KC_R,    KC_T,    KC_Y,    LT(ACCENT, KC_U),    LT(ACCENT,KC_I),   LT(ACCENT, KC_O),    KC_P,    KC_BSPC,
-    ALTER, LT(ACCENT, KC_A),    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_QUOT,
-    MO(ALTER),   KC_LCTL, KC_LALT, KC_LGUI, LOWER,   MT(MOD_LSFT, KC_SPC), MT(MOD_LSFT, KC_SPC),   LT(RAISE, KC_ENT),   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    KC_TAB,    KC_Q,    KC_W,    E_ACC,	  KC_R,    KC_T,     KC_Y,      U_ACC,         	 I_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
+    KC_LCTL,   A_ACC,   KC_S,    KC_D,    KC_F,    KC_G,     KC_H,      KC_J,     		   KC_K,    KC_L,    KC_SCLN, KC_LGUI,
+    KC_LSFT,   KC_Z,    KC_X,    C_ACC,    KC_V,    KC_B,     KC_N,      KC_M,     		   KC_COMM, KC_DOT,  KC_SLSH, KC_LALT,
+    KC_SPC, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   SPC_MAJ,  SPC_MAJ,   LT(RAISE, KC_ENT), KC_LALT, KC_LALT, KC_LCTL,   KC_RGHT
 ),
 // BACKLIT instead of RESET
+/* Lower
+ * ,-----------------------------------------------------------------------------------.
+ * |   tab|   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |  \   |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |  F7  |  F8  |  F9  |  F10 |  -  |   =   |  {  |   }   |   [  |   ]  |  |   |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_LOWER] = LAYOUT_planck_grid(
+// Config Standard
+    LGUI(KC_TAB),  KC_PGUP,     LCTL(KC_U), KC_UP,      LCTL(KC_O),   _______,    	_______,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+    KC_LCTL,       KC_PGDOWN,   KC_LEFT,    KC_DOWN,    KC_RGHT,      KC_DEL, 		  KC_BSPC,    KC_4,    KC_5,    KC_6,    KC_MINS, _______,
+// Config warcraft 3
+    //  KC_LCTL, KC_1,    KC_2,    KC_3,    KC_4,	  KC_5,    KC_6,     KC_Y,      U_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
+    //  KC_LCTL, LCTL(KC_1),    LCTL(KC_2),    LCTL(KC_3),    LCTL(KC_4),	  LCTL(KC_5),    LCTL(KC_6),     KC_Y,      U_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
+// Config warcraft 3
+    KC_LSFT,       KC_GRV,      KC_QUOT,    KC_BSLS,    KC_LBRC,      KC_RBRC, 		  _______,    KC_1,    KC_2,    KC_3,    KC_EQL,  TG(_QWERTY),
+    _______,   	   KC_LCTL,     KC_LALT,    KC_LGUI,   	_______,      SPC_MAJ,      SPC_MAJ,      LT(ADJUST, KC_ENT),    _______, _______, KC_LCTL, KC_VOLU
+),
+
+// [_LOWER] = LAYOUT_planck_grid(
+//     LGUI(KC_TAB),  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+//     KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSLS,
+//     KC_GRV, LGUI(KC_Z),  LGUI(KC_X), LGUI(KC_C),   LGUI(KC_V),  KC_MINS, KC_EQL, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_PIPE,
+//     _______, _______, _______, _______, LGUI(KC_SPC), LGUI(KC_SPC), _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+// ),
+
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
@@ -101,28 +162,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_planck_grid(
-    KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSPC,
-    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UNDS,    KC_PLUS,    KC_LCBR, KC_RCBR, KC_PIPE,
-    _______, KC_F7,   KC_F8,   LCTL(KC_C),   KC_F10,  KC_F11,  KC_F12,  S(KC_NUHS), S(KC_NUBS), KC_HOME, KC_END,  _______,
-    _______, _______, _______, _______, _______, _______, _______, _______,    KC_MNXT,    KC_VOLD, KC_VOLU, KC_MPLY
-),
-
-/* Lower
- * ,-----------------------------------------------------------------------------------.
- * |   tab|   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |  \   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  F7  |  F8  |  F9  |  F10 |  -  |   =   |  {  |   }   |   [  |   ]  |  |   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
- * `-----------------------------------------------------------------------------------'
- */
-[_LOWER] = LAYOUT_planck_grid(
-    LGUI(KC_TAB),  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-    KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSLS,
-    KC_GRV, LGUI(KC_Z),  LGUI(KC_X), LGUI(KC_C),   LGUI(KC_V),  KC_MINS, KC_EQL, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_PIPE,
-    _______, _______, _______, _______, LGUI(KC_SPC), LGUI(KC_SPC), _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+    _______, KC_PGUP,      LCTL(KC_U),  KC_UP,      LCTL(KC_O),  _______, EURO,  KC_AMPR, 	KC_ASTR,  KC_LPRN, KC_RPRN, _______,
+    KC_LCTL, KC_PGDOWN,    KC_LEFT,     KC_DOWN,    KC_RGHT, 	   KC_DEL, 	  KC_BSPC,  KC_DLR, KC_PERC,  KC_CIRC, KC_UNDS,  _______,
+    KC_LSFT, KC_TILD,       KC_DQUO,     KC_PIPE,    KC_LCBR,     KC_RCBR, 	_______,  KC_EXLM,  KC_AT,    KC_HASH, KC_PLUS ,  KC_LSFT,
+    RESET, KC_LCTL,      KC_LALT,     KC_LGUI,    ADJUST, 	   SPC_MAJ, 	SPC_MAJ,  _______,  KC_LGUI, KC_LALT, KC_LCTL, KC_MPLY
 ),
 
 /* Adjust (Lower + Raise)
@@ -137,26 +180,94 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
+
 [_ADJUST] = LAYOUT_planck_grid(
-    _______, _______,   _______,KC_MS_U, _______, RGB_HUI, RGB_HUD, RGB_SAI, KC_WH_D,  RGB_VAI, RGB_VAD, KC_DEL ,
-    _______, _______, KC_MS_L,  KC_MS_D,   KC_MS_R,  AG_NORM, AG_SWAP, KC_WH_R,  KC_WH_U,  KC_WH_L,  _______,  _______,
-    _______, MUV_DE,  MUV_IN,   MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  KC_BTN1, KC_BTN2, _______, _______, RESET,
-    RGB_TOG, RGB_MOD, RGB_HUI,  RGB_HUD, _______, _______, _______, _______, _______,  _______, _______,   DEBUG
+    KC_LSFT, XXXXXXX, XXXXXXX, LCTL(KC_E)	, XXXXXXX, XXXXXXX, XXXXXXX, LCTL(KC_U), KC_UP, LCTL(KC_O), KC_PGUP, _______,
+    RGB_HUI, RGB_HUD	, XXXXXXX, KC_DEL, XXXXXXX, XXXXXXX, KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDOWN, _______,
+    RGB_TOG, RGB_MOD, CUT, COPY, PASTE, XXXXXXX, XXXXXXX, KC_ENT, XXXXXXX, XXXXXXX, XXXXXXX, RESET,
+    XXXXXXX, _______, _______, _______, KC_LCTL, _______, _______, KC_ENT, _______, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
 [_ALTER] = LAYOUT_planck_grid(
-    KC_LSFT, XXXXXXX, XXXXXXX, LCTL(KC_E)	, XXXXXXX, XXXXXXX, XXXXXXX, LCTL(KC_U), KC_UP, LCTL(KC_O), KC_PGUP, _______,
-    XXXXXXX, LCTL(KC_A)	, XXXXXXX, KC_DEL, XXXXXXX, XXXXXXX, KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDOWN, _______,
-    _______, XXXXXXX, CUT, COPY, PASTE, XXXXXXX, XXXXXXX, KC_ENT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, _______, _______, _______, KC_LCTL, KC_ENT, KC_ENT, _______, LCTL(KC_LEFT), LCTL(KC_DOWN), LCTL(KC_UP), LCTL(KC_RGHT)
+    KC_WAKE, _______, GS_DC,  GS_IU, GS_DR, RGB_HUI, RGB_HUD,   KC_F7,   KC_F8,    KC_F9,   KC_F10, KC_DEL ,
+    _______, _______, GS_IL,  GS_ID, GS_IR, AG_NORM, _______,   KC_F4,   KC_F5,    KC_F6,   KC_F11,  DEBUG,
+    _______, MUV_DE,  MUV_IN,   GS_DC,   MU_OFF,  MI_ON,   _______,   KC_F1,   KC_F2,    KC_F3,   KC_F12, RESET,
+    RGB_TOG, RGB_MOD, RGB_HUI,  RGB_HUD, _______, _______, _______,   _______, KC_MUTE,  KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
-[_ACCENT] = LAYOUT_planck_grid(
-    KC_ESC,  _______,  E_AIG, _______, E_GRV,   _______, _______, _______, U_GRV,   I_TRM, O_TRM, _______,
-    _______,  _______,  A_GRV, _______, E_CIR,   _______, _______, _______, _______, I_CIR, O_CIR, _______,
-    _______, _______, _______, _______, E_TRM, _______, _______, _______, _______, _______, _______, _______,
+// [_ACC_A] = LAYOUT_planck_grid(
+//     _______,  _______,  _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______,
+//     _______,  _______,  A_GRV, _______, _______,   _______, _______, _______, _______, _______, _______, _______,
+//     _______, _______, A_CIR, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+//     ),
+// [_ACC_E] = LAYOUT_planck_grid(
+//     _______, _______, E_AIG,   _______, E_GRV,   _______, _______, _______, _______, _______, _______, _______,
+//     _______, _______, _______, _______, E_CIR,   _______, _______, _______, _______, _______, _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+//     ),
+// [_ACC_I] = LAYOUT_planck_grid(
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, I_TRM,   _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, I_CIR,   _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+//     ),
+// [_ACC_O] = LAYOUT_planck_grid(
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, O_TRM,   _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, O_CIR,   _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+//     ),
+// [_ACC_U] = LAYOUT_planck_grid(
+//     _______, _______, _______, _______, _______, _______, _______, _______, U_GRV,   _______, _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, U_CIR,   _______, _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+//     ),
+// [_ACC_C] = LAYOUT_planck_grid(
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+//     _______, _______, _______, _______, C_CED,   _______, _______, _______, _______, _______, _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+//     ),
+
+[_ACC_A] = LAYOUT_planck_grid(
+    _______,  _______,  _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______,
+    _______,  _______,  _______, _______, _______,   _______, _______, _______, A_GRV, A_CIR, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    )
+    ),
+[_ACC_E] = LAYOUT_planck_grid(
+    _______, _______, _______,   _______, _______,   _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______,   _______, _______, E_AIG, E_GRV, E_CIR, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+[_ACC_I] = LAYOUT_planck_grid(
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   _______, _______,
+    _______, _______, _______, I_CIR, I_TRM, _______, _______, _______, _______, _______,   _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+[_ACC_O] = LAYOUT_planck_grid(
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   _______,
+    _______, _______, _______,    O_CIR,  O_TRM, _______, _______, _______, _______, _______, _______,   _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+[_ACC_U] = LAYOUT_planck_grid(
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______,   U_GRV,   U_CIR, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+[_ACC_C] = LAYOUT_planck_grid(
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______,   C_CED, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
 };
 
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -170,7 +281,49 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         print("mode just switched to qwerty and this is a huge string\n");
         set_single_persistent_default_layer(_QWERTY);
       }
-      return false;
+      break;
+    // case A_ACC:
+    //   if (record->event.pressed) {
+    //     SEND_STRING("ir");
+    //   }
+    //   break;
+    // case KC_Y:
+    //   if (record->event.pressed) {
+    //     SEND_STRING("hellooooo");
+    //   }
+    //   break;
+  /*
+  ** integration google sheets features
+  */
+    case GS_IU:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LALT(SS_LCTL("ir")));
+      }
+      break;
+    case GS_ID:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LALT(SS_LCTL("ib")));
+      }
+      break;
+    case GS_IL:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LALT(SS_LCTL("ic")));
+      }
+      break;
+    case GS_IR:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LALT(SS_LCTL("io")));
+      }
+      break;
+    case GS_DC:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LALT(SS_LCTL("ee")));
+      }
+      break;
+    case GS_DR:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LALT(SS_LCTL("eD")));
+      }
       break;
   }
   return true;
