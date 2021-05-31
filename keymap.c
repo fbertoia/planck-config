@@ -13,8 +13,6 @@ const uint16_t PROGMEM fn_actions[] = {
 enum planck_layers {
   _QWERTY,
   _QWERTY_GAME,
-  _RAISE,
-  _ADJUST,
   _ALTER,
   _ACC_A,
   _ACC_E,
@@ -23,6 +21,8 @@ enum planck_layers {
   _ACC_U,
   _ACC_C,
   _LOWER,
+  _RAISE,
+  _ADJUST,
   _LOWER_GAME,
 
   // _ACCENT,
@@ -45,7 +45,14 @@ enum custom_keycodes {
   ACC_U,
   ACC_C,
   GAME_LR,
+  EMAIL_EQS,
+  EMAIL_F,
+  PWD_EQS,
+  NAME,
+  SURNAME,
+  ADDRESS,
 };
+
 #define LOWER MO(_LOWER)
 #define LOWER_GAME MO(_LOWER_GAME)
 #define RAISE MO(_RAISE)
@@ -87,11 +94,12 @@ enum planck_keycodes {
 #define PASTE LGUI(KC_V)
 
 #define SPC_MAJ  MT(MOD_LSFT, KC_SPC)
-#define J_CTL  MT(MOD_LCTL, KC_J)
-#define D_ALT  MT(MOD_LALT, KC_D)
-#define K_ALT  MT(MOD_LALT, KC_K)
-#define F_GUI  MT(MOD_LGUI, KC_F)
-#define L_GUI  MT(MOD_LGUI, KC_L)
+#define J_CMD  MT(MOD_LGUI, KC_J)
+#define S_ALT  MT(MOD_LALT, KC_S)
+#define D_CTL  MT(MOD_LCTL, KC_D)
+#define K_CTL  MT(MOD_LCTL, KC_K)
+#define F_CMD  MT(MOD_LGUI, KC_F)
+#define L_ALT  MT(MOD_LALT, KC_L)
 #define MOD_SCLN  MT(MOD_L, KC_SCLN)
 #define PG_DWN_CTL  MT(MOD_LCTL, KC_PGDOWN)
 
@@ -132,13 +140,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = LAYOUT_planck_grid(
     KC_TAB,    KC_Q,    KC_W,    E_ACC,	  KC_R,    KC_T,     KC_Y,      U_ACC,         	 I_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
-    KC_LCTL,   A_ACC,   KC_S,    D_ALT,    F_GUI,    KC_G,     KC_H,     J_CTL,            K_ALT,    L_GUI,    KC_SCLN, KC_LGUI,
+    KC_LCTL,   A_ACC,   KC_S,    KC_D,    KC_F,    KC_G,     KC_H,     KC_J,            KC_K,    KC_L,    KC_SCLN, KC_LGUI,
     KC_LSFT,   KC_Z,    KC_X,    C_ACC,    KC_V,    KC_B,     KC_N,      KC_M,     		   KC_COMM, KC_DOT,  KC_SLSH, KC_LALT,
     KC_SPC, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   SPC_MAJ,  SPC_MAJ,   LT(RAISE, KC_ENT), KC_LALT, KC_LALT, KC_LCTL,   KC_RGHT
 ),
 [_QWERTY_GAME] = LAYOUT_planck_grid(
     KC_TAB,    KC_Q,    KC_W,    E_ACC,	  KC_R,    KC_T,     KC_Y,      U_ACC,         	 I_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
-    KC_LCTL,   A_ACC,   KC_S,    D_ALT,    F_GUI,    KC_G,     KC_H,     J_CTL,            K_ALT,    L_GUI,    KC_SCLN, KC_LGUI,
+    KC_LCTL,   A_ACC,   KC_S,    KC_D,    KC_F,    KC_G,     KC_H,     KC_J,            KC_K,    KC_L,    KC_SCLN, KC_LGUI,
+    // KC_LCTL,   A_ACC,   S_ALT,    D_CTL,    F_CMD,    KC_G,     KC_H,     J_CMD,            K_CTL,    L_ALT,    KC_SCLN, KC_LGUI,
     KC_LSFT,   KC_Z,    KC_X,    C_ACC,    KC_V,    KC_B,     KC_N,      KC_M,     		   KC_COMM, KC_DOT,  KC_SLSH, KC_LALT,
     KC_SPC, KC_LCTL, KC_LALT, KC_LGUI, LOWER_GAME,   SPC_MAJ,  SPC_MAJ,   LT(RAISE, KC_ENT), KC_LALT, KC_LALT, KC_LCTL,   KC_RGHT
 ),
@@ -177,12 +186,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
-[_RAISE] = LAYOUT_planck_grid(
-    _______, KC_PGUP,      LCTL(KC_U),  KC_UP,      LCTL(KC_O),  _______, EURO,  KC_AMPR, 	KC_ASTR,  KC_LPRN, KC_RPRN, _______,
-    KC_LCTL, PG_DWN_CTL,    KC_LEFT,     KC_DOWN,    KC_RGHT, 	   KC_DEL, 	  KC_BSPC,  KC_DLR, KC_PERC,  KC_CIRC, KC_UNDS,  _______,
-    KC_LSFT, KC_TILD,       KC_DQUO,     KC_PIPE,    KC_LCBR,     KC_RCBR, 	_______,  KC_EXLM,  KC_AT,    KC_HASH, KC_PLUS ,  KC_LSFT,
-    RESET, KC_LCTL,      KC_LALT,     KC_LGUI,    _LOWER, 	   SPC_MAJ, 	SPC_MAJ,  _______,  KC_LGUI, KC_LALT, KC_LCTL, KC_MPLY
-),
 
 /* Adjust (Lower + Raise)
  *                      v------------------------RGB CONTROL--------------------v
@@ -197,15 +200,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 
-[_ADJUST] = LAYOUT_planck_grid(
-    KC_LSFT, XXXXXXX, XXXXXXX, LCTL(KC_E)	, XXXXXXX, XXXXXXX, XXXXXXX, LCTL(KC_U), KC_UP, LCTL(KC_O), KC_PGUP, _______,
-    RGB_HUI, RGB_HUD	, XXXXXXX, KC_DEL, XXXXXXX, XXXXXXX, KC_BSPC, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDOWN, _______,
-    RGB_TOG, RGB_MOD, CUT, COPY, PASTE, XXXXXXX, XXXXXXX, KC_ENT, XXXXXXX, XXXXXXX, XXXXXXX, RESET,
-    XXXXXXX, _______, _______, _______, KC_LCTL, _______, _______, KC_ENT, _______, KC_VOLD, KC_VOLU, KC_MPLY
-),
-
 [_ALTER] = LAYOUT_planck_grid(
-    KC_WAKE, _______, GS_DC,  GS_IU, GS_DR, RGB_HUI, RGB_HUD,   KC_F7,   KC_F8,    KC_F9,   GAME_LR, KC_DEL ,
+    KC_WAKE, _______, GS_DC,  GS_IU, GS_DR, RGB_HUI, RGB_HUD,   KC_F7,   KC_F8,    KC_F9,   KC_F10, KC_DEL ,
     _______, _______, GS_IL,  GS_ID, GS_IR, AG_NORM, _______,   KC_F4,   KC_F5,    KC_F6,   KC_F11,  DEBUG,
     _______, MUV_DE,  MUV_IN,   GS_DC,   MU_OFF,  MI_ON,   _______,   KC_F1,   KC_F2,    KC_F3,   KC_F12, RESET,
     RGB_TOG, RGB_MOD, RGB_HUI,  RGB_HUD, _______, _______, _______,   _______, KC_MUTE,  KC_VOLD, KC_VOLU, KC_MPLY
@@ -296,6 +292,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LSFT,       KC_GRV,      KC_QUOT,    KC_BSLS,    KC_LBRC,      KC_RBRC, 		  _______,    KC_1,    KC_2,    KC_3,    KC_EQL,  TG(_QWERTY),
     _______,   	   KC_LCTL,     KC_LALT,    KC_LGUI,   	_______,      SPC_MAJ,      SPC_MAJ,      LT(_RAISE, KC_ENT),    _______, _______, KC_LCTL, KC_VOLU
 ),
+[_RAISE] = LAYOUT_planck_grid(
+    _______, KC_PGUP,      LCTL(KC_U),  KC_UP,      LCTL(KC_O),  _______, EURO,  KC_AMPR, 	KC_ASTR,  KC_LPRN, KC_RPRN, _______,
+    KC_LCTL, PG_DWN_CTL,    KC_LEFT,     KC_DOWN,    KC_RGHT, 	   KC_DEL, 	  KC_BSPC,  KC_DLR, KC_PERC,  KC_CIRC, KC_UNDS,  _______,
+    KC_LSFT, KC_TILD,       KC_DQUO,     KC_PIPE,    KC_LCBR,     KC_RCBR, 	_______,  KC_EXLM,  KC_AT,    KC_HASH, KC_PLUS ,  KC_LSFT,
+    RESET, KC_LCTL,      KC_LALT,     KC_LGUI,    _______, 	   SPC_MAJ, 	SPC_MAJ,  _______,  KC_LGUI, KC_LALT, KC_LCTL, KC_MPLY
+),
+[_ADJUST] = LAYOUT_planck_grid(
+    KC_LSFT, EMAIL_F, EMAIL_EQS, EMAIL_EQS	, XXXXXXX, XXXXXXX, XXXXXXX, LCTL(KC_U), KC_UP, LCTL(KC_O), PWD_EQS, _______,
+    RGB_HUI, ADDRESS, PWD_EQS, KC_DEL, SURNAME, XXXXXXX, DM_RSTP, DM_REC1, KC_F1, KC_RGHT, KC_PGDOWN, _______,
+    RGB_TOG, RGB_MOD, CUT, COPY, PASTE, NAME, XXXXXXX, XXXXXXX, DM_PLY2, XXXXXXX, XXXXXXX, RESET,
+    XXXXXXX, _______, _______, _______, KC_LCTL, _______, _______, KC_ENT, _______, KC_VOLD, KC_VOLU, KC_MPLY
+),
 [_LOWER_GAME] = LAYOUT_planck_grid(
     LGUI(KC_TAB),  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSLS,
@@ -369,6 +377,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case GS_DR:
       if (record->event.pressed) {
         SEND_STRING(SS_LALT(SS_LCTL("eD")));
+      }
+      break;
+    case EMAIL_F:
+      if (record->event.pressed) {
+        SEND_STRING("frederic.bertoia@gmail.com");
+      }
+      break;
+    case EMAIL_EQS:
+      if (record->event.pressed) {
+        SEND_STRING("frederic.bertoia@equisafe.io");
+      }
+      break;
+    case PWD_EQS:
+      if (record->event.pressed) {
+        SEND_STRING("Qwerty12345#");
+      }
+      break;
+    case NAME:
+      if (record->event.pressed) {
+        SEND_STRING("Bertoia");
+      }
+      break;
+    case SURNAME:
+      if (record->event.pressed) {
+        SEND_STRING("Frederic");
+      }
+      break;
+    case ADDRESS:
+      if (record->event.pressed) {
+        SEND_STRING("18, rue des Capucines");
       }
       break;
   }

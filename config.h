@@ -40,3 +40,5 @@
 // #define RETRO_TAPPING
 #define PERMISSIVE_HOLD
 #define TAPPING_FORCE_HOLD
+// #define DAC_SAMPLE_MAX 65535U
+// #define TAPPING_TERM 200
