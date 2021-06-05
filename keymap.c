@@ -283,7 +283,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_LOWER] = LAYOUT_planck_grid(
 // Config Standard
-    LGUI(KC_TAB),  KC_PGUP,     LCTL(KC_U), KC_UP,      LCTL(KC_O),   KC_TAB,    	_______,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+    LGUI(KC_TAB),  KC_PGUP,     LCTL(KC_U), KC_UP,      LCTL(KC_O),   KC_TAB,    	KC_LALT,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
     KC_LCTL,       PG_DWN_CTL,   KC_LEFT,    KC_DOWN,    KC_RGHT,      KC_DEL, 		  KC_BSPC,     _4_CTL,     _5_ALT,     _6_GUI,    KC_MINS, _______,
 // Config warcraft 3
     //  KC_LCTL, KC_1,    KC_2,    KC_3,    KC_4,	  KC_5,    KC_6,     KC_Y,      U_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
