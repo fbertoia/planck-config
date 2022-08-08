@@ -44,13 +44,32 @@ enum custom_keycodes {
   ACC_O,
   ACC_U,
   ACC_C,
+  A_GRV,
   GAME_LR,
   EMAIL_EQS,
   EMAIL_F,
   PWD_EQS,
+  PWD_SSH,
   NAME,
   SURNAME,
   ADDRESS,
+
+  E_AIG,
+  E_GRV,
+  E_CIR,
+  E_TRM,
+  A_CIR,
+  U_GRV,
+  U_CIR,
+  C_CED,
+  EURO,
+  O_CIR,
+  O_TRM,
+  I_TRM,
+  I_CIR,
+
+
+
 };
 
 #define LOWER MO(_LOWER)
@@ -72,22 +91,6 @@ enum planck_keycodes {
   QWERTY = SAFE_RANGE,
 };
 
-#define E_AIG UC(0x00E9)
-#define E_GRV UC(0x00E8)
-#define E_CIR UC(0x00EA)
-#define E_TRM UC(0x00EB)
-#define A_GRV UC(0x00E0)
-#define A_CIR UC(0x00E2)
-#define U_GRV UC(0x00F9)
-#define U_CIR UC(0x00FB)
-#define C_CED UC(0x00E7)
-#define EURO UC(0x20AC)
-
-
-#define O_CIR UC(0x00F4)
-#define O_TRM UC(0x00F6)
-#define I_TRM UC(0x00EF)
-#define I_CIR UC(0x00EE)
 
 #define CUT LGUI(KC_X)
 #define COPY LGUI(KC_C)
@@ -147,7 +150,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY_GAME] = LAYOUT_planck_grid(
     KC_TAB,    KC_Q,    KC_W,    E_ACC,	  KC_R,    KC_T,     KC_Y,      U_ACC,         	 I_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
     KC_LCTL,   A_ACC,   KC_S,    KC_D,    KC_F,    KC_G,     KC_H,     KC_J,            KC_K,    KC_L,    KC_SCLN, KC_LGUI,
-    // KC_LCTL,   A_ACC,   S_ALT,    D_CTL,    F_CMD,    KC_G,     KC_H,     J_CMD,            K_CTL,    L_ALT,    KC_SCLN, KC_LGUI,
     KC_LSFT,   KC_Z,    KC_X,    C_ACC,    KC_V,    KC_B,     KC_N,      KC_M,     		   KC_COMM, KC_DOT,  KC_SLSH, KC_LALT,
     KC_SPC, KC_LCTL, KC_LALT, KC_LGUI, LOWER_GAME,   SPC_MAJ,  SPC_MAJ,   LT(RAISE, KC_ENT), KC_LALT, KC_LALT, KC_LCTL,   KC_RGHT
 ),
@@ -163,17 +165,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
-// [_LOWER_GAME] = LAYOUT_planck_grid(
-// // Config Standard
-//     // LGUI(KC_TAB),  KC_PGUP,     LCTL(KC_U), KC_UP,      LCTL(KC_O),   _______,    	_______,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-//     // KC_LCTL,       KC_PGDOWN,   KC_LEFT,    KC_DOWN,    KC_RGHT,      KC_DEL, 		  KC_BSPC,    KC_4,    KC_5,    KC_6,    KC_MINS, _______,
-// // Config warcraft 3
-//      KC_LCTL, KC_1,    KC_2,    KC_3,    KC_4,	  KC_5,    KC_6,     KC_Y,      U_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
-//      KC_LCTL, LCTL(KC_1),    LCTL(KC_2),    LCTL(KC_3),    LCTL(KC_4),	  LCTL(KC_5),    LCTL(KC_6),     KC_Y,      U_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
-// // Config warcraft 3
-//     KC_LSFT,       KC_GRV,      KC_QUOT,    KC_BSLS,    KC_LBRC,      KC_RBRC, 		  _______,    KC_1,    KC_2,    KC_3,    KC_EQL,  TG(_QWERTY),
-//     _______,   	   KC_LCTL,     KC_LALT,    KC_LGUI,   	_______,      SPC_MAJ,      SPC_MAJ,      LT(_RAISE, KC_ENT),    _______, _______, KC_LCTL, KC_VOLU
-// ),
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
@@ -283,31 +274,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_LOWER] = LAYOUT_planck_grid(
 // Config Standard
-    LGUI(KC_TAB),  KC_PGUP,     LCTL(KC_U), KC_UP,      LCTL(KC_O),   KC_TAB,    	KC_LALT,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+    LGUI(KC_TAB),  KC_PGUP,     LALT(KC_LEFT), KC_UP,      LALT(KC_RGHT),   KC_TAB,    	KC_LALT,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
     KC_LCTL,       PG_DWN_CTL,   KC_LEFT,    KC_DOWN,    KC_RGHT,      KC_DEL, 		  KC_BSPC,     _4_CTL,     _5_ALT,     _6_GUI,    KC_MINS, _______,
 // Config warcraft 3
     //  KC_LCTL, KC_1,    KC_2,    KC_3,    KC_4,	  KC_5,    KC_6,     KC_Y,      U_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
     //  KC_LCTL, LCTL(KC_1),    LCTL(KC_2),    LCTL(KC_3),    LCTL(KC_4),	  LCTL(KC_5),    LCTL(KC_6),     KC_Y,      U_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
 // Config warcraft 3
-    KC_LSFT,       KC_GRV,      KC_QUOT,    KC_BSLS,    KC_LBRC,      KC_RBRC, 		  _______,    KC_1,    KC_2,    KC_3,    KC_EQL,  TG(_QWERTY),
+    KC_LSFT,       KC_NUBS,      KC_QUOT,    KC_BSLS,    KC_LBRC,      KC_RBRC, 		  _______,    KC_1,    KC_2,    KC_3,    KC_EQL,  TG(_QWERTY),
     _______,   	   KC_LCTL,     KC_LALT,    KC_LGUI,   	_______,      SPC_MAJ,      SPC_MAJ,      LT(_RAISE, KC_ENT),    _______, _______, KC_LCTL, KC_VOLU
 ),
 [_RAISE] = LAYOUT_planck_grid(
-    _______, KC_PGUP,      LCTL(KC_U),  KC_UP,      LCTL(KC_O),  _______, EURO,  KC_AMPR, 	KC_ASTR,  KC_LPRN, KC_RPRN, _______,
+    _______, KC_PGUP,      LALT(KC_LEFT),  KC_UP,      LALT(KC_RGHT),  _______, EURO,  KC_AMPR, 	KC_ASTR,  KC_LPRN, KC_RPRN, _______,
     KC_LCTL, PG_DWN_CTL,    KC_LEFT,     KC_DOWN,    KC_RGHT, 	   KC_DEL, 	  KC_BSPC,  KC_DLR, KC_PERC,  KC_CIRC, KC_UNDS,  _______,
-    KC_LSFT, KC_TILD,       KC_DQUO,     KC_PIPE,    KC_LCBR,     KC_RCBR, 	_______,  KC_EXLM,  KC_AT,    KC_HASH, KC_PLUS ,  KC_LSFT,
+    KC_LSFT, S(KC_NUBS),       KC_DQUO,     KC_PIPE,    KC_LCBR,     KC_RCBR, 	_______,  KC_EXLM,  KC_AT,    KC_HASH, KC_PLUS ,  KC_LSFT,
     RESET, KC_LCTL,      KC_LALT,     KC_LGUI,    _______, 	   SPC_MAJ, 	SPC_MAJ,  _______,  KC_LGUI, KC_LALT, KC_LCTL, KC_MPLY
 ),
 [_ADJUST] = LAYOUT_planck_grid(
     KC_LSFT, EMAIL_F, EMAIL_EQS, EMAIL_EQS	, XXXXXXX, XXXXXXX, XXXXXXX, LCTL(KC_U), KC_UP, LCTL(KC_O), PWD_EQS, _______,
-    RGB_HUI, ADDRESS, PWD_EQS, KC_DEL, SURNAME, XXXXXXX, DM_RSTP, DM_REC1, KC_F1, KC_RGHT, KC_PGDOWN, _______,
+    RGB_HUI, ADDRESS, PWD_EQS, KC_DEL, SURNAME, XXXXXXX, PWD_SSH, DM_REC1, KC_F1, KC_RGHT, KC_PGDOWN, _______,
     RGB_TOG, RGB_MOD, CUT, COPY, PASTE, NAME, XXXXXXX, XXXXXXX, DM_PLY2, XXXXXXX, XXXXXXX, RESET,
     XXXXXXX, _______, _______, _______, KC_LCTL, _______, _______, KC_ENT, _______, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 [_LOWER_GAME] = LAYOUT_planck_grid(
     LGUI(KC_TAB),  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSLS,
-    KC_GRV, LGUI(KC_Z),  LGUI(KC_X), LGUI(KC_C),   LGUI(KC_V),  KC_MINS, KC_EQL, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_PIPE,
+    KC_NUBS, LGUI(KC_Z),  LGUI(KC_X), LGUI(KC_C),   LGUI(KC_V),  KC_MINS, KC_EQL, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_PIPE,
     _______, _______, _______, _______, LGUI(KC_SPC), LGUI(KC_SPC), _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
@@ -325,6 +316,28 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // return update_tri_layer_state(state, _ACC_A, _LOWER, (uint8_t)(LM(_LOWER, MOD_LCTL)));
   // if (state == (_ACC_A + _LOWER))
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
+
+void process_accent(char *letter, char *accent) {
+  if (!strcmp(accent, "`")) {
+      register_code(KC_LALT);
+      register_code(KC_NUBS);
+      unregister_code(KC_LALT);
+      SEND_STRING(letter);
+  } else if (!strcmp(accent, "´")) {
+      SEND_STRING(SS_LALT("e"));
+      SEND_STRING(letter);
+  } else if (!strcmp(accent, "^")) {
+      SEND_STRING(SS_LALT("i"));
+      SEND_STRING(letter);
+  } else if (!strcmp(accent, "ç")) {
+      SEND_STRING(SS_LALT("c"));
+  } else if (!strcmp(accent, "€")) {
+      SEND_STRING(SS_LALT(SS_LSFT("2")));
+  } else if (!strcmp(accent, "¨")) {
+      SEND_STRING(SS_LALT("u"));
+      SEND_STRING(letter);
+  }
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -350,68 +363,118 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   ** integration google sheets features
   */
     case GS_IU:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING(SS_LALT(SS_LCTL("ir")));
-      }
       break;
     case GS_ID:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING(SS_LALT(SS_LCTL("ib")));
-      }
       break;
     case GS_IL:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING(SS_LALT(SS_LCTL("ic")));
-      }
       break;
     case GS_IR:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING(SS_LALT(SS_LCTL("io")));
-      }
       break;
     case GS_DC:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING(SS_LALT(SS_LCTL("ee")));
-      }
       break;
     case GS_DR:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING(SS_LALT(SS_LCTL("eD")));
-      }
       break;
     case EMAIL_F:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING("frederic.bertoia@gmail.com");
-      }
       break;
     case EMAIL_EQS:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING("frederic.bertoia@equisafe.io");
-      }
       break;
     case PWD_EQS:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING("Qwerty12345#");
-      }
+      break;
+    case PWD_SSH:
+      if (record->event.pressed)
+        SEND_STRING("abc");
       break;
     case NAME:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING("Bertoia");
-      }
       break;
     case SURNAME:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING("Frederic");
-      }
       break;
     case ADDRESS:
-      if (record->event.pressed) {
+      if (record->event.pressed)
         SEND_STRING("18, rue des Capucines");
-      }
+      break;
+    case A_GRV:
+      if (record->event.pressed)
+        process_accent("a", "`");
+      break;
+    case E_AIG:
+      if (record->event.pressed)
+        process_accent("e", "´");
+      break;
+    case E_GRV:
+      if (record->event.pressed)
+        process_accent("e", "`");
+      break;
+    case E_CIR:
+      if (record->event.pressed)
+        process_accent("e", "^");
+      break;
+    case E_TRM:
+      if (record->event.pressed)
+        process_accent("e", "¨");
+      break;
+    case A_CIR:
+      if (record->event.pressed)
+        process_accent("a", "^");
+      break;
+    case U_GRV:
+      if (record->event.pressed)
+        process_accent("u", "`");
+      break;
+    case U_CIR:
+      if (record->event.pressed)
+        process_accent("u", "^");
+      break;
+    case C_CED:
+      if (record->event.pressed)
+        process_accent("c", "ç");
+      break;
+    case EURO:
+      if (record->event.pressed)
+        process_accent("", "€");
+      break;
+    case O_CIR:
+      if (record->event.pressed)
+        process_accent("o", "^");
+      break;
+    case O_TRM:
+      if (record->event.pressed)
+        process_accent("o", "¨");
+      break;
+    case I_TRM:
+      if (record->event.pressed)
+        process_accent("i", "¨");
+      break;
+    case I_CIR:
+      if (record->event.pressed)
+        process_accent("i", "^");
       break;
   }
   return true;
 }
+// e = ´
+
 
 void matrix_init_user(void) {
   set_unicode_input_mode(UC_OSX);
