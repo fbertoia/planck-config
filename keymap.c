@@ -280,13 +280,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //  KC_LCTL, KC_1,    KC_2,    KC_3,    KC_4,	  KC_5,    KC_6,     KC_Y,      U_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
     //  KC_LCTL, LCTL(KC_1),    LCTL(KC_2),    LCTL(KC_3),    LCTL(KC_4),	  LCTL(KC_5),    LCTL(KC_6),     KC_Y,      U_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
 // Config warcraft 3
-    KC_LSFT,       KC_NUBS,      KC_QUOT,    KC_BSLS,    KC_LBRC,      KC_RBRC, 		  _______,    KC_1,    KC_2,    KC_3,    KC_EQL,  TG(_QWERTY),
+    KC_LSFT,       KC_GRAVE,      KC_QUOT,    KC_BSLS,    KC_LBRC,      KC_RBRC, 		  _______,    KC_1,    KC_2,    KC_3,    KC_EQL,  TG(_QWERTY),
     _______,   	   KC_LCTL,     KC_LALT,    KC_LGUI,   	_______,      SPC_MAJ,      SPC_MAJ,      LT(_RAISE, KC_ENT),    _______, _______, KC_LCTL, KC_VOLU
 ),
 [_RAISE] = LAYOUT_planck_grid(
     _______, KC_PGUP,      LALT(KC_LEFT),  KC_UP,      LALT(KC_RGHT),  _______, EURO,  KC_AMPR, 	KC_ASTR,  KC_LPRN, KC_RPRN, _______,
     KC_LCTL, PG_DWN_CTL,    KC_LEFT,     KC_DOWN,    KC_RGHT, 	   KC_DEL, 	  KC_BSPC,  KC_DLR, KC_PERC,  KC_CIRC, KC_UNDS,  _______,
-    KC_LSFT, S(KC_NUBS),       KC_DQUO,     KC_PIPE,    KC_LCBR,     KC_RCBR, 	_______,  KC_EXLM,  KC_AT,    KC_HASH, KC_PLUS ,  KC_LSFT,
+    KC_LSFT, S(KC_GRAVE),       KC_DQUO,     KC_PIPE,    KC_LCBR,     KC_RCBR, 	_______,  KC_EXLM,  KC_AT,    KC_HASH, KC_PLUS ,  KC_LSFT,
     RESET, KC_LCTL,      KC_LALT,     KC_LGUI,    _______, 	   SPC_MAJ, 	SPC_MAJ,  _______,  KC_LGUI, KC_LALT, KC_LCTL, KC_MPLY
 ),
 [_ADJUST] = LAYOUT_planck_grid(
@@ -321,7 +321,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 void process_accent(char *letter, char *accent) {
   if (!strcmp(accent, "`")) {
       register_code(KC_LALT);
-      register_code(KC_NUBS);
+      register_code(KC_GRAVE);
       unregister_code(KC_LALT);
       SEND_STRING(letter);
   } else if (!strcmp(accent, "´")) {
