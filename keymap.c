@@ -67,6 +67,7 @@ enum custom_keycodes {
   O_TRM,
   I_TRM,
   I_CIR,
+  EMOJI,
 
 
 
@@ -145,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,    KC_Q,    KC_W,    E_ACC,	  KC_R,    KC_T,     KC_Y,      U_ACC,         	 I_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
     KC_LCTL,   A_ACC,   KC_S,    KC_D,    KC_F,    KC_G,     KC_H,     KC_J,            KC_K,    KC_L,    KC_SCLN, KC_LGUI,
     KC_LSFT,   KC_Z,    KC_X,    C_ACC,    KC_V,    KC_B,     KC_N,      KC_M,     		   KC_COMM, KC_DOT,  KC_SLSH, KC_LALT,
-    KC_SPC, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   SPC_MAJ,  SPC_MAJ,   LT(RAISE, KC_ENT), KC_LALT, KC_LALT, KC_LCTL,   KC_RGHT
+    KC_SPC, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   SPC_MAJ,  SPC_MAJ,   LT(RAISE, KC_ENT), KC_LALT, KC_LALT, KC_LCTL,   EMOJI
 ),
 [_QWERTY_GAME] = LAYOUT_planck_grid(
     KC_TAB,    KC_Q,    KC_W,    E_ACC,	  KC_R,    KC_T,     KC_Y,      U_ACC,         	 I_ACC,   O_ACC,   KC_P,    LT(ALTER, KC_ESC),
@@ -364,27 +365,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   */
     case GS_IU:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("ir")));
+        SEND_STRING(SS_LALT(SS_LCTL("irr")));
       break;
     case GS_ID:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("ib")));
+        SEND_STRING(SS_LALT(SS_LCTL("irb")));
       break;
     case GS_IL:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("ic")));
+        SEND_STRING(SS_LALT(SS_LCTL("icc")));
       break;
     case GS_IR:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("io")));
+        SEND_STRING(SS_LALT(SS_LCTL("ico")));
       break;
     case GS_DC:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("ee")));
+        SEND_STRING(SS_LALT(SS_LCTL("eDe")));
       break;
     case GS_DR:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("eD")));
+        SEND_STRING(SS_LALT(SS_LCTL("eDd")));
       break;
     case EMAIL_F:
       if (record->event.pressed)
@@ -470,6 +471,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed)
         process_accent("i", "^");
       break;
+    case EMOJI:
+      if (record->event.pressed)
+        SEND_STRING(SS_LCTL(SS_LGUI(" ")));
   }
   return true;
 }
