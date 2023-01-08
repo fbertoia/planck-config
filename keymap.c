@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "muse.h"
 #include "config.h"
+#include "password.h"
 
 #define SFT_ENT  FUNC(0)    // Tap for enter, hold for right shift
 
@@ -401,7 +402,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case PWD_SSH:
       if (record->event.pressed)
-        SEND_STRING("abc");
+        SEND_STRING(SSH_PWD_EXPORT);
       break;
     case NAME:
       if (record->event.pressed)
