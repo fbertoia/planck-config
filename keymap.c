@@ -54,6 +54,7 @@ enum custom_keycodes {
   NAME,
   SURNAME,
   ADDRESS,
+  SIREN,
 
   E_AIG,
   E_GRV,
@@ -292,9 +293,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     RESET, KC_LCTL,      KC_LALT,     KC_LGUI,    _______, 	   SPC_MAJ, 	SPC_MAJ,  _______,  KC_LGUI, KC_LALT, KC_LCTL, KC_MPLY
 ),
 [_ADJUST] = LAYOUT_planck_grid(
-    KC_LSFT, EMAIL_F, EMAIL_EQS, EMAIL_EQS	, XXXXXXX, XXXXXXX, XXXXXXX, LCTL(KC_U), KC_UP, LCTL(KC_O), PWD_EQS, _______,
-    RGB_HUI, ADDRESS, PWD_EQS, KC_DEL, SURNAME, XXXXXXX, PWD_SSH, DM_REC1, KC_F1, KC_RGHT, KC_PGDOWN, _______,
-    RGB_TOG, RGB_MOD, CUT, COPY, PASTE, NAME, XXXXXXX, XXXXXXX, DM_PLY2, XXXXXXX, XXXXXXX, RESET,
+    KC_LSFT, XXXXXXX, XXXXXXX, LALT(LGUI(KC_UP)), XXXXXXX, EMAIL_EQS, EMAIL_F, LCTL(KC_U), KC_UP, LCTL(KC_O), PWD_EQS, _______,
+    RGB_HUI, XXXXXXX, LALT(LGUI(KC_LEFT)), LALT(LGUI(KC_DOWN)), LALT(LGUI(KC_RGHT)), PWD_EQS, PWD_SSH, DM_REC1, KC_F1, KC_RGHT, KC_PGDOWN, _______,
+    RGB_TOG, RGB_MOD, CUT, COPY, PASTE, NAME, ADDRESS, SIREN, DM_PLY2, XXXXXXX, XXXXXXX, RESET,
     XXXXXXX, _______, _______, _______, KC_LCTL, _______, _______, KC_ENT, _______, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 [_LOWER_GAME] = LAYOUT_planck_grid(
@@ -364,30 +365,38 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   /*
   ** integration google sheets features
   */
+//   Insert row above
     case GS_IU:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("irr")));
+        SEND_STRING(SS_LGUI(SS_LALT("=r")));
       break;
+//  Insert row below
     case GS_ID:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("irb")));
+        SEND_STRING(SS_LGUI(SS_LALT("=b")));
       break;
+//  Insert column left
     case GS_IL:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("icc")));
+        SEND_STRING(SS_LGUI(SS_LALT("=c")));
       break;
+// Insert column right
     case GS_IR:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("ico")));
+        SEND_STRING(SS_LGUI(SS_LALT("=o")));
+        SEND_STRING(SS_LALT(SS_LCTL("io")));
       break;
+// Delete column
     case GS_DC:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("eDe")));
+        SEND_STRING(SS_LGUI(SS_LALT("-c")));
       break;
+// Delete row
     case GS_DR:
       if (record->event.pressed)
-        SEND_STRING(SS_LALT(SS_LCTL("eDd")));
+        SEND_STRING(SS_LGUI(SS_LALT("-r")));
       break;
+////////////////////////////////////////////////////////
     case EMAIL_F:
       if (record->event.pressed)
         SEND_STRING("frederic.bertoia@gmail.com");
@@ -415,6 +424,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case ADDRESS:
       if (record->event.pressed)
         SEND_STRING("18, rue des Capucines");
+      break;
+    case SIREN:
+      if (record->event.pressed)
+        SEND_STRING("845383645");
       break;
     case A_GRV:
       if (record->event.pressed)
