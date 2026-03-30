@@ -42,3 +42,5 @@
 #define TAPPING_FORCE_HOLD
 // #define DAC_SAMPLE_MAX 65535U
 #define TAPPING_TERM 250
+#define QUICK_TAP_TERM 0
+

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pushd ~/qmk_firmware && make planck/ez:frederic:flash && popd
+pushd ~/qmk_firmware && make zsa/planck_ez:frederic:flash && popd
